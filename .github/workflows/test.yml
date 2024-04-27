@@ -27,5 +27,5 @@ jobs:
     - name: Test
       run: |
         # Запуск тестов
-        dotnet test --configuration Release
+        dotnet test SpecFlowProject1
 
