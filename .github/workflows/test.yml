@@ -26,4 +26,4 @@ jobs:
         
     - name: Test
       run: |
-        dotnet test SpecFlowProject1
+        dotnet test SpecFlowProject1 > test_results.txt 2>&1
