@@ -13,13 +13,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Chrome setup
-      run: Xvfb :0 -ac -screen 0 1024x768x24 &
-
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0' # Укажите версию .NET, если она отличается
+        dotnet-version: '6.0'
 
     - name: Restore dependencies
       run: dotnet restore
@@ -27,8 +24,13 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release
 
+    - name: Set up Xvfb
+      run: |
+        sudo apt-get install xvfb
+        Xvfb :0 -ac -screen 0 1024x768x24 &
+        
     - name: Test
       run: |
-        # Запуск тестов
         dotnet test SpecFlowProject1
 
+    
