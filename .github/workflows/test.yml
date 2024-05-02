@@ -24,6 +24,8 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release
         
-    - name: Test
-      run: |
-        dotnet test SpecFlowProject1 --logger:"console;verbosity=detailed"
+    - name: Specflow Tests
+      run: dotnet test SpecFlowProject1 --logger:"console;verbosity=detailed"
+      
+    - name: SeleniumInitialize_Tests
+      run: dotnet test SeleniumInitialize_Tests
