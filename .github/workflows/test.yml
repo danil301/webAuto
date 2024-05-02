@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
@@ -26,11 +26,9 @@ jobs:
 
     - name: Set up Xvfb
       run: |
-        sudo apt-get install xvfb
+        choco install xvfb
         Xvfb :0 -ac -screen 0 1024x768x24 &
         
     - name: Test
       run: |
         dotnet test SpecFlowProject1
-
-    
