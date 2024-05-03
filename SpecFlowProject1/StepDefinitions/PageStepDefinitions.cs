@@ -3,8 +3,10 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using Pages;
 using Pages.Pages;
+using Pages.WebElements;
 using SeleniumInitialize_Builder;
 using System;
+using System.Reflection;
 using TechTalk.SpecFlow;
 
 namespace SpecFlowProject1.StepDefinitions
@@ -22,39 +24,24 @@ namespace SpecFlowProject1.StepDefinitions
         {
             SeleniumBuilder builder = new SeleniumBuilder();
             _driver = builder.Build();
-            _driverWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));            
+            _driverWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            _interactions = new Interactions(_driver, _driverWait);
         }
 
         [Given(@"Переходим на страницу по адрессу ""([^""]*)""")]
         public void GoToPageWithUrl(string url)
         {
             _driver.Navigate().GoToUrl(url);
-            _debitCardYourCashBack = new DebitCardYourCashBack(_driver, _driverWait, true);
-            _interactions = new Interactions(_driver, _driverWait);
+            Assert.AreEqual(url, _driver.Url, "Неверный url");
         }
 
-        [Then(@"Проверяем адресс ""([^""]*)""")]
-        public void CheckUrl(string url)
+        //страница в параметр и потом рефл
+        [Then(@"Заполнить поле ""([^""]*)"" текстом ""([^""]*)""")]
+        public void FillTextField(string fieldName, string text)
         {
-            Assert.AreEqual(url, _driver.Url, "Неправильный url");
-        }
-
-        [Then(@"Заполнить поле Фамилия ""([^""]*)""")]
-        public void FillLastName(string input)
-        {
-            _interactions.FillTextFields(_debitCardYourCashBack.lastNameInput.element, input);
-        }
-
-        [Then(@"Заполнить поле Имя ""([^""]*)""")]
-        public void FillFirstName(string input)
-        {
-            _interactions.FillTextFields(_debitCardYourCashBack.firstNameInput.element, input);
-        }
-
-        [Then(@"Заполнить поле Отчество ""([^""]*)""")]
-        public void FillMiddleName(string input)
-        {
-            _interactions.FillTextFields(_debitCardYourCashBack.middleNameInput.element, input);
+            FieldInfo fieldInfo = typeof(DebitCardYourCashBack).GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+            CustomWebElement field = (CustomWebElement)fieldInfo.GetValue(_debitCardYourCashBack);
+            _interactions.FillActionFields(field.element, text);
         }
 
         [Then(@"Выбрать пол ""([^""]*)""")]
@@ -65,76 +52,57 @@ namespace SpecFlowProject1.StepDefinitions
 
         }
 
-        [Then(@"Заполнить дату рождения ""([^""]*)""")]
-        public void FillBirthDate(string date)
-        {
-            _interactions.FillActionFields(_debitCardYourCashBack.birthDateInput.element, date);
-        }
-
-        [Then(@"Ввести номер мобильного телефона ""([^""]*)""")]
-        public void FillPhoneNumber(string input)
-        {
-            _interactions.FillActionFields(_debitCardYourCashBack.phoneNumberInput.element, input);
-        }
-
         [Then(@"Выбрать гражданство ""([^""]*)""")]
         public void FillCitizenship(string input)
         {
             _interactions.FillListBox(_debitCardYourCashBack.citizenShipInput.element, input);
         }
 
-        [Then(@"Выбрать чекбокс на согласие обработки данных")]
-        public void ClickPersonalDataCheckBox()
+        [Then(@"Поставить чекбокс ""([^""]*)"" в положение ""([^""]*)""")]
+        public void SetCheckBox(string checkBox, string state)
         {
-            _interactions.ClickElement(_debitCardYourCashBack.personalDataCheckBox.element);
+            FieldInfo fieldInfo = typeof(DebitCardYourCashBack).GetField(checkBox, BindingFlags.Public | BindingFlags.Instance);
+            CustomWebElement field = (CustomWebElement)fieldInfo.GetValue(_debitCardYourCashBack);
+            _interactions.FillCheckBox(state == "Включён", field.element, field._xPath);
         }
 
-        [Then(@"Выбрать чекбокс рассылки")]
-        public void ClickPromotionCheckBox()
-        {
-            _interactions.ClickElement(_debitCardYourCashBack.promotionCheckBox.element);
-        }
-
+        //кнопка продолжить для всех страниц
         [Then(@"Нажать кнопку продолжить")]
         public void ClickContinueButton()
         {
             _interactions.ClickElement(_debitCardYourCashBack.continueButton.element);
         }
 
-        [Given(@"Открылась страница подтверждения данных с url ""([^""]*)""")]
-        public void InitCheckDataPage(string p0)
+        [Given(@"Открылась страница ""([^""]*)""")]
+        public void InitPage(string classTypeName)
         {
-            _checkDataPage = new CheckDataPage(_driver, _driverWait);
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string exeDirectory = Path.GetDirectoryName(exePath);
+            string solutionDirectory = Path.Combine(exeDirectory, "..", "..", "..", "..", "Pages", "bin", "Debug", "net6.0", "Pages.dll");
+            string fullPathToSolution = Path.GetFullPath(solutionDirectory);
+            Assembly assembly = Assembly.LoadFrom(fullPathToSolution);
+
+            Type type = assembly.GetType($"Pages.Pages.{classTypeName}");
+            object instance = Activator.CreateInstance(type, _driver, _driverWait, true);
+
+            FieldInfo fieldInfo = typeof(PageStepDefinitions)
+                .GetFields(BindingFlags.Instance | BindingFlags.NonPublic).FirstOrDefault(x => x.FieldType == type);
+            fieldInfo.SetValue(this, instance);
         }
 
-        [Given(@"Поле фамилии равно ""([^""]*)""")]
-        public void CheckLastName(string text)
+        [Given(@"Текст поля ""([^""]*)"" равен ""([^""]*)""")]
+        public void CheckText(string fieldName, string text)
         {
-            Assert.AreEqual(text, _checkDataPage.lastName.Text, "Поле фамилии не совпадает");
+            FieldInfo fieldInfo = typeof(CheckDataPage).GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+            IWebElement field = (IWebElement)fieldInfo.GetValue(_checkDataPage);
+            Assert.AreEqual(text, field.Text, "Неверный текст");
         }
 
-        [Given(@"Поле имени равно ""([^""]*)""")]
-        public void CheckFirstName(string text)
+        [Then(@"Закрыть страницу")]
+        public void Dispose()
         {
-            Assert.AreEqual(text, _checkDataPage.firstName.Text, "Поле имени не совпадает");
+            _driver.Dispose();
         }
 
-        [Given(@"Поле отчества равно ""([^""]*)""")]
-        public void CheckMiddleName(string text)
-        {
-            Assert.AreEqual(text, _checkDataPage.middleName.Text, "Поле отчества не совпадает");
-        }
-
-        [Given(@"Поле даты рождения равно ""([^""]*)""")]
-        public void CheckBirthDate(string text)
-        {
-            Assert.AreEqual(text, _checkDataPage.birthDate.Text, "Поле даты рождения не совпадает");
-        }
-
-        [Given(@"Поле номера телефона равно ""([^""]*)""")]
-        public void CheckPhoneNumber(string text)
-        {
-            Assert.AreEqual(text, _checkDataPage.phoneNumber.Text, "Поле номера телефона не совпадает");
-        }
     }
 }

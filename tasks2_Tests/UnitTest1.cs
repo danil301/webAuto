@@ -509,7 +509,7 @@ namespace tasks2_Tests
                 .ClickElement(debitCardYourCashBack.maleRadioButton.element)
                 .ClickElement(debitCardYourCashBack.continueButton.element);
 
-            CheckDataPage checkDataPageDebit = new CheckDataPage(driver, driverWait);
+            CheckDataPage checkDataPageDebit = new CheckDataPage(driver, driverWait, true);
 
             Assert.Multiple(() =>
             {
@@ -548,7 +548,7 @@ namespace tasks2_Tests
                 .ClickElement(creditPage.maleRadioButton.element)
                 .ClickElement(creditPage.continueButton.element);
 
-            CheckDataPage checkDataPageCredit = new CheckDataPage(driver, driverWait);
+            CheckDataPage checkDataPageCredit = new CheckDataPage(driver, driverWait, true);
 
             Assert.Multiple(() =>
             {

@@ -24,7 +24,7 @@ namespace Pages.Pages
         [FindsBy(How = How.XPath, Using = "//div[@class='confirm-section__mobile-phone']/b")]
         public IWebElement phoneNumber;
 
-        public CheckDataPage(IWebDriver driver, WebDriverWait webDriverWait)
+        public CheckDataPage(IWebDriver driver, WebDriverWait webDriverWait, bool cookie)
         {
             _driver = driver;
             _driverWait = webDriverWait;
