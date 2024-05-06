@@ -159,9 +159,6 @@ this.ScenarioInitialize(scenarioInfo);
 #line 24
  testRunner.Given("Текст поля \"phoneNumber\" равен \"+7 (900) 102-20-20\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 25
- testRunner.Then("Закрыть страницу", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
             }
             this.ScenarioCleanup();
         }

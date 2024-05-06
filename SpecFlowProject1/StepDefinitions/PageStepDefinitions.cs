@@ -110,7 +110,7 @@ namespace SpecFlowProject1.StepDefinitions
         }
 
 
-        [Then(@"Закрыть страницу")]
+        [AfterScenario]
         public void Dispose()
         {
             _driver.Dispose();
