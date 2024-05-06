@@ -16,10 +16,10 @@ Scenario: Проверка корректности данных на стран
 	Then Поставить чекбокс "personalDataCheckBox" в положение "Включён"
 	Then Поставить чекбокс "promotionCheckBox" в положение "Включён"
 	Then Нажать кнопку продолжить
-	Given Открылась страница "CheckDataPage"
-	Given Текст поля "firstName" равен "абв"
-	Given Текст поля "lastName" равен "абв"
-	Given Текст поля "middleName" равен "абв"
+	Given Открылась страница "CheckDataPage"	
+	Given Текст поля "firstName" верный
+	Given Текст поля "lastName" верный
+	Given Текст поля "middleName" верный
+	Given Текст поля "birthDate" верный
 	Given Текст поля "phoneNumber" равен "+7 (900) 102-20-20"
-	Given Текст поля "birthDate" равен "30.12.2003"
 	Then Закрыть страницу

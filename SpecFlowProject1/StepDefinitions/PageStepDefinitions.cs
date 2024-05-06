@@ -19,9 +19,11 @@ namespace SpecFlowProject1.StepDefinitions
         private DebitCardYourCashBack _debitCardYourCashBack;
         private Interactions _interactions;
         private CheckDataPage _checkDataPage;
+        private ScenarioContext _scenarioContext;
 
-        public PageStepDefinitions()
+        public PageStepDefinitions(ScenarioContext scenarioConttext)
         {
+            _scenarioContext = scenarioConttext;
             SeleniumBuilder builder = new SeleniumBuilder();
             _driver = builder.Build();
             _driverWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
@@ -42,6 +44,7 @@ namespace SpecFlowProject1.StepDefinitions
             FieldInfo fieldInfo = typeof(DebitCardYourCashBack).GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
             CustomWebElement field = (CustomWebElement)fieldInfo.GetValue(_debitCardYourCashBack);
             _interactions.FillActionFields(field.element, text);
+            _scenarioContext[fieldName.Replace("Input", "")] = text;
         }
 
         [Then(@"Выбрать пол ""([^""]*)""")]
@@ -49,7 +52,6 @@ namespace SpecFlowProject1.StepDefinitions
         {
             if (sex == "мужской") _interactions.ClickElement(_debitCardYourCashBack.maleRadioButton.element);
             else if (sex == "женский") _interactions.ClickElement(_debitCardYourCashBack.femaleRadioButton.element);
-
         }
 
         [Then(@"Выбрать гражданство ""([^""]*)""")]
@@ -97,6 +99,16 @@ namespace SpecFlowProject1.StepDefinitions
             IWebElement field = (IWebElement)fieldInfo.GetValue(_checkDataPage);
             Assert.AreEqual(text, field.Text, "Неверный текст");
         }
+
+        [Given(@"Текст поля ""([^""]*)"" верный")]
+        public void CheckFieldText(string fieldName)
+        {
+            FieldInfo fieldInfo = typeof(CheckDataPage).GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+            IWebElement field = (IWebElement)fieldInfo.GetValue(_checkDataPage);
+            var a = _scenarioContext[fieldName];
+            Assert.AreEqual(_scenarioContext[fieldName], field.Text, "Неверный текст");
+        }
+
 
         [Then(@"Закрыть страницу")]
         public void Dispose()

@@ -145,19 +145,19 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("Открылась страница \"CheckDataPage\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 20
- testRunner.Given("Текст поля \"firstName\" равен \"абв\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Текст поля \"firstName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 21
- testRunner.Given("Текст поля \"lastName\" равен \"абв\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Текст поля \"lastName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 22
- testRunner.Given("Текст поля \"middleName\" равен \"абв\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Текст поля \"middleName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 23
- testRunner.Given("Текст поля \"phoneNumber\" равен \"+7 (900) 102-20-20\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Текст поля \"birthDate\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 24
- testRunner.Given("Текст поля \"birthDate\" равен \"30.12.2003\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Текст поля \"phoneNumber\" равен \"+7 (900) 102-20-20\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 25
  testRunner.Then("Закрыть страницу", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
