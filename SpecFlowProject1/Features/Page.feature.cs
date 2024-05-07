@@ -109,55 +109,120 @@ this.ScenarioInitialize(scenarioInfo);
                         "ck-new\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
- testRunner.Given("Открылась страница \"DebitCardYourCashBack\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Then("Заполнить поле \"lastNameInput\" страницы \"DebitCardYourCashBack\" текстом \"абв\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 9
- testRunner.Then("Заполнить поле \"lastNameInput\" текстом \"абв\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Заполнить поле \"firstNameInput\" страницы \"DebitCardYourCashBack\" текстом \"абв\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 10
- testRunner.Then("Заполнить поле \"firstNameInput\" текстом \"абв\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Заполнить поле \"middleNameInput\" страницы \"DebitCardYourCashBack\" текстом \"абв\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 11
- testRunner.Then("Заполнить поле \"middleNameInput\" текстом \"абв\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Нажать на \"maleRadioButton\" на странице \"DebitCardYourCashBack\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 12
- testRunner.Then("Выбрать пол \"мужской\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Заполнить поле \"birthDateInput\" страницы \"DebitCardYourCashBack\" текстом \"30.12.2" +
+                        "003\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 13
- testRunner.Then("Заполнить поле \"birthDateInput\" текстом \"30.12.2003\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Заполнить поле \"phoneNumberInput\" страницы \"DebitCardYourCashBack\" текстом \"90010" +
+                        "22020\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 14
- testRunner.Then("Заполнить поле \"phoneNumberInput\" текстом \"9001022020\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Поставить листбокс \"citizenShipInput\" на странице \"DebitCardYourCashBack\" в полож" +
+                        "ение \"РФ\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 15
- testRunner.Then("Выбрать гражданство \"РФ\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Поставить чекбокс \"personalDataCheckBox\" на страницке \"DebitCardYourCashBack\" в п" +
+                        "оложение \"true\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 16
- testRunner.Then("Поставить чекбокс \"personalDataCheckBox\" в положение \"Включён\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Поставить чекбокс \"promotionCheckBox\" на страницке \"DebitCardYourCashBack\" в поло" +
+                        "жение \"true\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 17
- testRunner.Then("Поставить чекбокс \"promotionCheckBox\" в положение \"Включён\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Нажать на \"continueButton\" на странице \"DebitCardYourCashBack\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 18
- testRunner.Then("Нажать кнопку продолжить", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 19
- testRunner.Given("Открылась страница \"CheckDataPage\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 20
  testRunner.Given("Текст поля \"firstName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 21
+#line 19
  testRunner.Given("Текст поля \"lastName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 22
+#line 20
  testRunner.Given("Текст поля \"middleName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 23
+#line 21
  testRunner.Given("Текст поля \"birthDate\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 24
- testRunner.Given("Текст поля \"phoneNumber\" равен \"+7 (900) 102-20-20\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 22
+ testRunner.Given("Текст поля \"phoneNumber\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Проверка корректности данных на странице подтверждения после заполнения формы на " +
+            "дебетку(сразу заполняем поля)")]
+        [NUnit.Framework.CategoryAttribute("test2")]
+        public virtual void ПроверкаКорректностиДанныхНаСтраницеПодтвержденияПослеЗаполненияФормыНаДебеткуСразуЗаполняемПоля()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "test2"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Проверка корректности данных на странице подтверждения после заполнения формы на " +
+                    "дебетку(сразу заполняем поля)", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 26
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 27
+ testRunner.Given("Переходим на страницу по адрессу \"https://ib.psbank.ru/store/products/your-cashba" +
+                        "ck-new\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Field",
+                            "Value"});
+                table1.AddRow(new string[] {
+                            "firstName",
+                            "абв"});
+                table1.AddRow(new string[] {
+                            "lastName",
+                            "абв"});
+                table1.AddRow(new string[] {
+                            "middleName",
+                            "абв"});
+                table1.AddRow(new string[] {
+                            "birthDate",
+                            "30.12.2003"});
+                table1.AddRow(new string[] {
+                            "phoneNumber",
+                            "9004156767"});
+                table1.AddRow(new string[] {
+                            "citizenShip",
+                            "РФ"});
+#line 28
+ testRunner.Then("Заполнить поля страницы:", ((string)(null)), table1, "Then ");
+#line hidden
+#line 36
+ testRunner.Then("Проверить поля страницы", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
