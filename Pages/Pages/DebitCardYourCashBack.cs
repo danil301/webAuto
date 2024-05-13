@@ -3,6 +3,7 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using Pages.Helpers;
 using Pages.WebElements;
+using SpecFlowProject1;
 
 namespace Pages.Pages
 {
@@ -86,6 +87,19 @@ namespace Pages.Pages
         {
             categoriesButton = new CustomWebElement("//span[contains(text(), 'Выбрать другие категории')]/../..", _driver, _driverWait);
             yearButton = new CustomWebElement("//rui-icon[contains(@name, 'Calendar')]", _driver, _driverWait);
+        }
+
+        public override void FillPage(Data data, Interactions interactions)
+        {
+            interactions.FillActionFields(firstNameInput.element, data.firstName);
+            interactions.FillActionFields(lastNameInput.element, data.lastName);
+            interactions.FillActionFields(middleNameInput.element, data.middleName);
+            interactions.FillActionFields(birthDateInput.element, data.birthDate);
+            interactions.FillActionFields(phoneNumberInput.element, data.phoneNumber);
+            interactions.FillListBox(citizenShipInput.element, data.citizenShip);
+            interactions.ClickElement(data.sex == 'М' ? maleRadioButton.element : femaleRadioButton.element);
+            interactions.FillCheckBox(data.promotionCheckBox, promotionCheckBox.element, promotionCheckBox._xPath);
+            interactions.FillCheckBox(data.promotionCheckBox, personalDataCheckBox.element, personalDataCheckBox._xPath);
         }
     }
 }

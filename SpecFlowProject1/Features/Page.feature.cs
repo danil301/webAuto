@@ -218,11 +218,35 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "citizenShip",
                             "РФ"});
+                table1.AddRow(new string[] {
+                            "sex",
+                            "М"});
+                table1.AddRow(new string[] {
+                            "personalDataCheckBox",
+                            "true"});
+                table1.AddRow(new string[] {
+                            "promotionCheckBox",
+                            "true"});
 #line 28
  testRunner.Then("Заполнить поля страницы:", ((string)(null)), table1, "Then ");
 #line hidden
-#line 36
- testRunner.Then("Проверить поля страницы", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 39
+ testRunner.Then("Нажать на \"continueButton\" на странице \"DebitCardYourCashBack\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 40
+ testRunner.Given("Текст поля \"firstName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 41
+ testRunner.Given("Текст поля \"lastName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 42
+ testRunner.Given("Текст поля \"middleName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 43
+ testRunner.Given("Текст поля \"birthDate\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 44
+ testRunner.Given("Текст поля \"phoneNumber\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             }
             this.ScenarioCleanup();

@@ -2,11 +2,8 @@
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SpecFlowProject1;
+
 
 namespace Pages.Pages
 {
@@ -15,6 +12,11 @@ namespace Pages.Pages
         protected IWebDriver _driver;
         protected WebDriverWait _driverWait;
         protected Actions _actions;
+
+        public virtual void FillPage(Data data, Interactions interactions)
+        {
+
+        }
 
         public BasePage(IWebDriver driver, WebDriverWait driverWait, bool cookie)
         {

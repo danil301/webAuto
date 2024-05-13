@@ -26,11 +26,19 @@ Scenario: Проверка корректности данных на стран
 Scenario: Проверка корректности данных на странице подтверждения после заполнения формы на дебетку(сразу заполняем поля)
 	Given Переходим на страницу по адрессу "https://ib.psbank.ru/store/products/your-cashback-new"
 	Then Заполнить поля страницы:
-		| Field       | Value      |
-		| firstName   | абв        |
-		| lastName    | абв        |
-		| middleName  | абв        |
-		| birthDate   | 30.12.2003 |
-		| phoneNumber | 9004156767 |
-		| citizenShip | РФ         |
-	Then Проверить поля страницы
+		| Field                | Value      |
+		| firstName            | абв        |
+		| lastName             | абв        |
+		| middleName           | абв        |
+		| birthDate            | 30.12.2003 |
+		| phoneNumber          | 9004156767 |
+		| citizenShip          | РФ         |
+		| sex                  | М          |
+		| personalDataCheckBox | true       |
+		| promotionCheckBox    | true       |
+	Then Нажать на "continueButton" на странице "DebitCardYourCashBack"
+	Given Текст поля "firstName" верный
+	Given Текст поля "lastName" верный
+	Given Текст поля "middleName" верный
+	Given Текст поля "birthDate" верный
+	Given Текст поля "phoneNumber" верный

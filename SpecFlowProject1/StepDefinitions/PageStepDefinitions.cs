@@ -46,19 +46,27 @@ namespace SpecFlowProject1.StepDefinitions
             Assert.AreEqual(url, _driver.Url, "Неверный url");
         }
 
-        [Then(@"Заполнить поле ""([^""]*)"" страницы ""([^""]*)"" текстом ""([^""]*)""")]
-        public void FillTextField(string fieldName, string page, string text)
+        private object GetPage(string pageName)
         {
-            Type type = Type.GetType($"Pages.Pages.{page}, Pages");
-            FieldInfo fieldInfo = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
-
+            Type type = Type.GetType($"Pages.Pages.{pageName}, Pages");
             FieldInfo classInfo = typeof(PageStepDefinitions).GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
-                .FirstOrDefault(x => x.Name.ToLower().Contains(page.ToLower()));
+                .FirstOrDefault(x => x.Name.ToLower().Contains(pageName.ToLower()));
 
             var lazyPageInstance = classInfo.GetValue(this) as dynamic;
-            var pageInstance = lazyPageInstance.Value;
+            return lazyPageInstance.Value;
+        }
 
-            CustomWebElement field = (CustomWebElement)fieldInfo.GetValue(pageInstance);
+        private CustomWebElement GetField(object page, string fieldName)
+        {
+            FieldInfo fieldInfo = page.GetType().GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+            return (CustomWebElement)fieldInfo.GetValue(page);
+        }
+
+        [Then(@"Заполнить поле ""([^""]*)"" страницы ""([^""]*)"" текстом ""([^""]*)""")]
+        public void FillTextField(string fieldName, string pageName, string text)
+        {
+            var pageInstance = GetPage(pageName);
+            var field = GetField(pageInstance, fieldName);
 
             _interactions.FillActionFields(field.element, text);
             if (fieldName != "phoneNumberInput") _scenarioContext[fieldName.Replace("Input", "")] = text;
@@ -72,16 +80,8 @@ namespace SpecFlowProject1.StepDefinitions
         [Then(@"Нажать на ""([^""]*)"" на странице ""([^""]*)""")]
         public void ClickElement(string elementName, string pageName)
         {
-            Type type = Type.GetType($"Pages.Pages.{pageName}, Pages");
-            FieldInfo fieldInfo = type.GetField(elementName, BindingFlags.Public | BindingFlags.Instance);
-
-            FieldInfo classInfo = typeof(PageStepDefinitions).GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
-                .FirstOrDefault(x => x.Name.ToLower().Contains(pageName.ToLower()));
-
-            var lazyPageInstance = classInfo.GetValue(this) as dynamic;
-            var pageInstance = lazyPageInstance.Value;
-
-            CustomWebElement element = (CustomWebElement)fieldInfo.GetValue(pageInstance);
+            var pageInstance = GetPage(pageName);
+            var element = GetField(pageInstance, elementName);
 
             _interactions.ClickElement(element.element);
         }
@@ -89,35 +89,19 @@ namespace SpecFlowProject1.StepDefinitions
         [Then(@"Поставить листбокс ""([^""]*)"" на странице ""([^""]*)"" в положение ""([^""]*)""")]
         public void FillListBox(string listBoxName, string pageName, string state)
         {
-            Type type = Type.GetType($"Pages.Pages.{pageName}, Pages");
-            FieldInfo fieldInfo = type.GetField(listBoxName, BindingFlags.Public | BindingFlags.Instance);
+            var pageInstance = GetPage(pageName);
+            var listBox = GetField(pageInstance, listBoxName);
 
-            FieldInfo classInfo = typeof(PageStepDefinitions).GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
-                .FirstOrDefault(x => x.Name.ToLower().Contains(pageName.ToLower()));
-
-            var lazyPageInstance = classInfo.GetValue(this) as dynamic;
-            var pageInstance = lazyPageInstance.Value;
-
-            CustomWebElement element = (CustomWebElement)fieldInfo.GetValue(pageInstance);
-
-            _interactions.FillListBox(element.element, state);
+            _interactions.FillListBox(listBox.element, state);
         }
 
         [Then(@"Поставить чекбокс ""([^""]*)"" на страницке ""([^""]*)"" в положение ""([^""]*)""")]
         public void SetCheckBox(string checkBoxName, string pageName, bool state)
         {
-            Type type = Type.GetType($"Pages.Pages.{pageName}, Pages");
-            FieldInfo fieldInfo = type.GetField(checkBoxName, BindingFlags.Public | BindingFlags.Instance);
+            var pageInstance = GetPage(pageName);
+            var checkBox = GetField(pageInstance, checkBoxName);
 
-            FieldInfo classInfo = typeof(PageStepDefinitions).GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
-                .FirstOrDefault(x => x.Name.ToLower().Contains(pageName.ToLower()));
-
-            var lazyPageInstance = classInfo.GetValue(this) as dynamic;
-            var pageInstance = lazyPageInstance.Value;
-
-            CustomWebElement element = (CustomWebElement)fieldInfo.GetValue(pageInstance);
-
-            _interactions.FillCheckBox(state, element.element, element._xPath);
+            _interactions.FillCheckBox(state, checkBox.element, checkBox._xPath);
         }
 
         [Given(@"Текст поля ""([^""]*)"" верный")]
@@ -132,35 +116,16 @@ namespace SpecFlowProject1.StepDefinitions
         public void FillAllFields(Table table)
         {
             var fields = table.CreateInstance<Data>();
-           
-            _interactions.FillActionFields(_debitCardYourCashBack.firstNameInput.element, fields.firstName);
-            _interactions.FillActionFields(_debitCardYourCashBack.lastNameInput.element, fields.lastName);
-            _interactions.FillActionFields(_debitCardYourCashBack.middleNameInput.element, fields.middleName);
-            _interactions.FillActionFields(_debitCardYourCashBack.birthDateInput.element, fields.birthDate);
-            _interactions.FillActionFields(_debitCardYourCashBack.phoneNumberInput.element, fields.phoneNumber);
-            _interactions.FillListBox(_debitCardYourCashBack.citizenShipInput.element, fields.citizenShip);
-            _interactions.FillCheckBox(true, _debitCardYourCashBack.promotionCheckBox.element, _debitCardYourCashBack.promotionCheckBox._xPath);
-            _interactions.FillCheckBox(true, _debitCardYourCashBack.personalDataCheckBox.element, _debitCardYourCashBack.personalDataCheckBox._xPath);
-            _interactions.ClickElement(_debitCardYourCashBack.femaleRadioButton.element);
-            _interactions.ClickElement(_debitCardYourCashBack.continueButton.element);
+
+            _debitCardYourCashBack.FillPage(fields, _interactions);
 
             fields.phoneNumber = $"+7 ({fields.phoneNumber.Substring(0, 3)}) " +
                     $"{fields.phoneNumber.Substring(3, 3)}-{fields.phoneNumber.Substring(6, 2)}-{fields.phoneNumber.Substring(8, 2)}";
-            _scenarioContext["data"] = fields;
-        }
-
-        [Then(@"Проверить поля страницы")]
-        public void CheckAllFields()
-        {
-            Data data = (Data)_scenarioContext["data"];
-            Assert.Multiple(() =>
-            {
-                Assert.AreEqual(data.firstName, _checkDataPage.firstName.Text);
-                Assert.AreEqual(data.lastName, _checkDataPage.lastName.Text);
-                Assert.AreEqual(data.middleName, _checkDataPage.middleName.Text);
-                Assert.AreEqual(data.phoneNumber, _checkDataPage.phoneNumber.Text);
-                Assert.AreEqual(data.birthDate, _checkDataPage.birthDate.Text);
-            });
+            _scenarioContext["firstName"] = fields.firstName;
+            _scenarioContext["lastName"] = fields.lastName;
+            _scenarioContext["middleName"] = fields.middleName;
+            _scenarioContext["birthDate"] = fields.birthDate;
+            _scenarioContext["phoneNumber"] = fields.phoneNumber;
         }
 
 

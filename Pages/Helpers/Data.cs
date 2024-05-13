@@ -14,5 +14,8 @@ namespace SpecFlowProject1
         public string birthDate;
         public string phoneNumber;
         public string citizenShip;
+        public char sex;
+        public bool personalDataCheckBox;
+        public bool promotionCheckBox;
     }
 }
