@@ -89,17 +89,35 @@ namespace Pages.Pages
             yearButton = new CustomWebElement("//rui-icon[contains(@name, 'Calendar')]", _driver, _driverWait);
         }
 
-        public override void FillPage(Data data, Interactions interactions)
+        public override void FillPage(Data data)
         {
-            interactions.FillActionFields(firstNameInput.element, data.firstName);
-            interactions.FillActionFields(lastNameInput.element, data.lastName);
-            interactions.FillActionFields(middleNameInput.element, data.middleName);
-            interactions.FillActionFields(birthDateInput.element, data.birthDate);
-            interactions.FillActionFields(phoneNumberInput.element, data.phoneNumber);
-            interactions.FillListBox(citizenShipInput.element, data.citizenShip);
-            interactions.ClickElement(data.sex == 'М' ? maleRadioButton.element : femaleRadioButton.element);
-            interactions.FillCheckBox(data.promotionCheckBox, promotionCheckBox.element, promotionCheckBox._xPath);
-            interactions.FillCheckBox(data.promotionCheckBox, personalDataCheckBox.element, personalDataCheckBox._xPath);
+            _interactions.FillActionFields(firstNameInput.element, data.firstName);
+            _interactions.FillActionFields(lastNameInput.element, data.lastName);
+            _interactions.FillActionFields(middleNameInput.element, data.middleName);
+            _interactions.FillActionFields(birthDateInput.element, data.birthDate);
+            _interactions.FillActionFields(phoneNumberInput.element, data.phoneNumber);
+            _interactions.FillListBox(citizenShipInput.element, data.citizenShip);
+            _interactions.ClickElement(data.sex == 'М' ? maleRadioButton.element : femaleRadioButton.element);
+            _interactions.FillCheckBox(data.promotionCheckBox, promotionCheckBox.element, promotionCheckBox._xPath);
+            _interactions.FillCheckBox(data.personalDataCheckBox, personalDataCheckBox.element, personalDataCheckBox._xPath);
+        }
+
+        public string testMethod()
+        {
+            return "adsfdt";
+        }
+
+        public string testMethod(string a, int b)
+        {
+            return a;
+        }
+        public int testMethod(int a)
+        {
+            return a;
+        }
+        public int testMethod(int a, int b)
+        {
+            return a + b;
         }
     }
 }

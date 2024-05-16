@@ -12,8 +12,9 @@ namespace Pages.Pages
         protected IWebDriver _driver;
         protected WebDriverWait _driverWait;
         protected Actions _actions;
+        protected Interactions _interactions;
 
-        public virtual void FillPage(Data data, Interactions interactions)
+        public virtual void FillPage(Data data)
         {
 
         }
@@ -23,6 +24,7 @@ namespace Pages.Pages
             _driver = driver;   
             _driverWait = driverWait;
             _actions = new Actions(driver);
+            _interactions = new Interactions(driver, driverWait);
 
             driverWait.IgnoreExceptionTypes(typeof(ElementClickInterceptedException));
             if (cookie)

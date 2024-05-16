@@ -7,6 +7,8 @@ using SeleniumExtras.WaitHelpers;
 using SeleniumInitialize_Builder;
 using System.Text.RegularExpressions;
 using Pages.Pages;
+using Newtonsoft.Json;
+using SpecFlowProject1;
 
 namespace tasks2_Tests
 {
@@ -877,6 +879,38 @@ namespace tasks2_Tests
                 Assert.True(isRefinancingMonthlyPaymentNumber, "Месячный платеж не число в рефинансировании.");
                 Assert.True(isRefinancingProgramInterestRateMatch, "Процент не соответствует маске в рефинансировании.");
             });            
+        }
+
+        [Test]
+        public void CheckDataTest()
+        {
+            var driver = _builder.Build();
+            driver.Navigate().GoToUrl("https://ib.psbank.ru/store/products/your-cashback-new");
+            WebDriverWait driverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            {
+                PollingInterval = TimeSpan.FromMilliseconds(200),
+            };
+
+            string path = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..");
+            string[] files = Directory.GetFiles(path, "data.json", SearchOption.AllDirectories);
+
+            Data data = JsonConvert.DeserializeObject<Data>(File.ReadAllText(files[0]));
+
+            DebitCardYourCashBack debitCardYourCashBack = new DebitCardYourCashBack(driver, driverWait, true);
+            debitCardYourCashBack.FillPage(data);
+            debitCardYourCashBack.continueButton.element.Click();
+
+            CheckDataPage checkDataPageDebit = new CheckDataPage(driver, driverWait, true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(checkDataPageDebit.lastName.Text, data.lastName, "Поле фамилии не совпадает");
+                Assert.AreEqual(checkDataPageDebit.firstName.Text, data.firstName, "Поле имени не совпадает");
+                Assert.AreEqual(checkDataPageDebit.middleName.Text, data.middleName, "Поле отчества не совпадает");
+                Assert.AreEqual(checkDataPageDebit.birthDate.Text, data.birthDate, "Поле даты рождения не совпадает");
+                Assert.AreEqual(checkDataPageDebit.phoneNumber.Text.Replace(" ", "").Replace("+", "").Replace("-", " ").Replace("(", "")
+                .Replace(")", "").Replace(" ", "").Substring(1), data.phoneNumber, "Поле номера телефона не совпадает");
+            });
         }
     }
 }

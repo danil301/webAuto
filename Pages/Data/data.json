@@ -1,0 +1,11 @@
+{
+  "firstName": "абв",
+  "lastName": "абв",
+  "middleName": "абв",
+  "birthDate": "30.12.2003",
+  "phoneNumber": "9004156767",
+  "citizenShip": "РФ",
+  "sex": "М",
+  "personalDataCheckBox": true,
+  "promotionCheckBox": true
+}
