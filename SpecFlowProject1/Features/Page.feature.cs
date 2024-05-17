@@ -173,7 +173,7 @@ this.ScenarioInitialize(scenarioInfo);
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Проверка корректности данных на странице подтверждения после заполнения формы на " +
                     "дебетку(сразу заполняем поля)", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 27
+#line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -193,7 +193,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 28
+#line 26
  testRunner.Given("Переходим на страницу по адрессу \"https://ib.psbank.ru/store/products/your-cashba" +
                         "ck-new\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
@@ -227,25 +227,25 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "promotionCheckBox",
                             "true"});
-#line 29
+#line 27
  testRunner.Then("Заполнить поля страницы \"DebitCardYourCashBack\" параметрами:", ((string)(null)), table1, "Then ");
 #line hidden
-#line 40
+#line 38
  testRunner.Then("Нажать на \"continueButton\" на странице \"DebitCardYourCashBack\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 41
+#line 39
  testRunner.Given("Текст поля \"firstName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 42
+#line 40
  testRunner.Given("Текст поля \"lastName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 43
+#line 41
  testRunner.Given("Текст поля \"middleName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 44
+#line 42
  testRunner.Given("Текст поля \"birthDate\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 45
+#line 43
  testRunner.Given("Текст поля \"phoneNumber\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             }
@@ -263,7 +263,7 @@ this.ScenarioInitialize(scenarioInfo);
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Проверка корректности данных на странице подтверждения после заполнения формы на " +
                     "дебетку(через методы страницы)", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 48
+#line 46
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -283,30 +283,29 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 49
+#line 47
  testRunner.Given("Переходим на страницу по адрессу \"https://ib.psbank.ru/store/products/your-cashba" +
                         "ck-new\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 50
- testRunner.Then("Заполнить страницу \"DebitCardYourCashBack\" данными из файла \"D:\\webtasks\\Pages\\Da" +
-                        "ta\\data.json\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 48
+ testRunner.Then("Заполнить страницу \"DebitCardYourCashBack\" данными из файла \"data.json\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 51
+#line 49
  testRunner.Then("Нажать на \"continueButton\" на странице \"DebitCardYourCashBack\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 52
+#line 50
  testRunner.Given("Текст поля \"firstName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 53
+#line 51
  testRunner.Given("Текст поля \"lastName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 54
+#line 52
  testRunner.Given("Текст поля \"middleName\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 55
+#line 53
  testRunner.Given("Текст поля \"birthDate\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 56
+#line 54
  testRunner.Given("Текст поля \"phoneNumber\" верный", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             }

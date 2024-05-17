@@ -21,8 +21,6 @@ Scenario: Проверка корректности данных на стран
 	Given Текст поля "birthDate" верный
 	Given Текст поля "phoneNumber" верный
 
-
-
 @test2
 Scenario: Проверка корректности данных на странице подтверждения после заполнения формы на дебетку(сразу заполняем поля)
 	Given Переходим на страницу по адрессу "https://ib.psbank.ru/store/products/your-cashback-new"
@@ -47,7 +45,7 @@ Scenario: Проверка корректности данных на стран
 @test3
 Scenario: Проверка корректности данных на странице подтверждения после заполнения формы на дебетку(через методы страницы)
 	Given Переходим на страницу по адрессу "https://ib.psbank.ru/store/products/your-cashback-new"
-	Then Заполнить страницу "DebitCardYourCashBack" данными из файла "D:\webtasks\Pages\Data\data.json"
+	Then Заполнить страницу "DebitCardYourCashBack" данными из файла "data.json"
 	Then Нажать на "continueButton" на странице "DebitCardYourCashBack"
 	Given Текст поля "firstName" верный
 	Given Текст поля "lastName" верный
