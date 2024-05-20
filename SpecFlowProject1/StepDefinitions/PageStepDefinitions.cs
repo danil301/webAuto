@@ -7,6 +7,7 @@ using Pages.Pages;
 using Pages.WebElements;
 using SeleniumInitialize_Builder;
 using System.Reflection;
+using System.Text.Json;
 using TechTalk.SpecFlow.Assist;
 
 namespace SpecFlowProject1.StepDefinitions
@@ -26,6 +27,8 @@ namespace SpecFlowProject1.StepDefinitions
 
         private Interactions _interactions;
         private ScenarioContext _scenarioContext;
+
+        private BasePage _targetPage;
 
         public PageStepDefinitions(ScenarioContext scenarioConttext)
         {
@@ -71,8 +74,7 @@ namespace SpecFlowProject1.StepDefinitions
         [Then(@"Заполнить поле ""([^""]*)"" страницы ""([^""]*)"" текстом ""([^""]*)""")]
         public void FillTextField(string fieldName, string pageName, string text)
         {
-            var pageInstance = GetPage(pageName);
-            var field = GetField(pageInstance, fieldName);
+            var field = GetField(GetPage(pageName), fieldName);
 
             _interactions.FillActionFields(field.element, text);
             if (fieldName != "phoneNumberInput") SaveDataToContext(fieldName, text);
@@ -86,27 +88,21 @@ namespace SpecFlowProject1.StepDefinitions
         [Then(@"Нажать на ""([^""]*)"" на странице ""([^""]*)""")]
         public void ClickElement(string elementName, string pageName)
         {
-            var pageInstance = GetPage(pageName);
-            var element = GetField(pageInstance, elementName);
-
+            var element = GetField(GetPage(pageName), elementName);
             _interactions.ClickElement(element.element);
         }
 
         [Then(@"Поставить листбокс ""([^""]*)"" на странице ""([^""]*)"" в положение ""([^""]*)""")]
         public void FillListBox(string listBoxName, string pageName, string state)
         {
-            var pageInstance = GetPage(pageName);
-            var listBox = GetField(pageInstance, listBoxName);
-
+            var listBox = GetField(GetPage(pageName), listBoxName);
             _interactions.FillListBox(listBox.element, state);
         }
 
         [Then(@"Поставить чекбокс ""([^""]*)"" на страницке ""([^""]*)"" в положение ""([^""]*)""")]
         public void SetCheckBox(string checkBoxName, string pageName, bool state)
         {
-            var pageInstance = GetPage(pageName);
-            var checkBox = GetField(pageInstance, checkBoxName);
-
+            var checkBox = GetField(GetPage(pageName), checkBoxName);
             _interactions.FillCheckBox(state, checkBox.element, checkBox._xPath);
         }
 
@@ -124,7 +120,7 @@ namespace SpecFlowProject1.StepDefinitions
         {
             var fields = table.CreateInstance<Data>();
 
-            _debitCardYourCashBack.FillPage(fields);
+            GetPage(pageName).FillPage(fields);
 
             fields.phoneNumber = $"+7 ({fields.phoneNumber.Substring(0, 3)}) " +
                     $"{fields.phoneNumber.Substring(3, 3)}-{fields.phoneNumber.Substring(6, 2)}-{fields.phoneNumber.Substring(8, 2)}";
@@ -138,6 +134,7 @@ namespace SpecFlowProject1.StepDefinitions
 
             var types = new List<Type>();
             var values = new List<object>();
+                        
 
             foreach (var row in table.Rows)
             {
@@ -149,18 +146,38 @@ namespace SpecFlowProject1.StepDefinitions
             page.GetType().GetMethod(methodName, types.ToArray()).Invoke(page, values.ToArray());                  
         }
 
-        [Then(@"Заполнить страницу ""([^""]*)"" данными из файла ""([^""]*)""")]
-        public void FillPageFromJson(string pageName, string jsonPath)
+        [Then(@"Заполнить страницу ""([^""]*)"" данными из файла ""([^""]*)"" сценарием ""([^""]*)""")]
+        public void FillPageFromJson(string pageName, string jsonPath, string scenario)
         {
             string path = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..");
             string[] files = Directory.GetFiles(path, "data.json", SearchOption.AllDirectories);
-
-            Data data = JsonConvert.DeserializeObject<Data>(File.ReadAllText(files[0]));      
+            var scenarios = JsonConvert.DeserializeObject<Dictionary<string, Data>>(File.ReadAllText(files[0]));
+            Data data = scenarios[scenario];
 
             GetPage(pageName).FillPage(data);
             data.phoneNumber = $"+7 ({data.phoneNumber.Substring(0, 3)}) " +
                     $"{data.phoneNumber.Substring(3, 3)}-{data.phoneNumber.Substring(6, 2)}-{data.phoneNumber.Substring(8, 2)}";
             _scenarioContext["data"] = data;
+        }
+
+        [Given(@"Выбрать страницу ""([^""]*)""")]
+        public void SetTargetPage(string pageName)
+        {
+            _targetPage = GetPage(pageName);
+        }
+
+        [Then(@"Заполнить поле ""([^""]*)"" текстом ""([^""]*)""")]
+        public void FillTargetTextField(string fieldName, string text)
+        {
+            var field = GetField(_targetPage, fieldName);
+
+            _interactions.FillActionFields(field.element, text);
+            if (fieldName != "phoneNumberInput") SaveDataToContext(fieldName, text);
+            else
+            {
+                SaveDataToContext(fieldName, $"+7 ({text.Substring(0, 3)}) " +
+                    $"{text.Substring(3, 3)}-{text.Substring(6, 2)}-{text.Substring(8, 2)}");
+            }
         }
 
 

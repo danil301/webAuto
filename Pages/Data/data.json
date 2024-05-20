@@ -1,11 +1,24 @@
 {
-  "firstName": "абв",
-  "lastName": "абв",
-  "middleName": "абв",
-  "birthDate": "30.12.2003",
-  "phoneNumber": "9004156767",
-  "citizenShip": "РФ",
-  "sex": "М",
-  "personalDataCheckBox": true,
-  "promotionCheckBox": true
+    "goodScenario": {
+      "firstName": "абв",
+      "lastName": "абв",
+      "middleName": "абв",
+      "birthDate": "30.12.2003",
+      "phoneNumber": "9004156767",
+      "citizenShip": "РФ",
+      "sex": "М",
+      "personalDataCheckBox": true,
+      "promotionCheckBox": true
+    },
+    "badScenario": {
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "middleName": "Anne",
+      "birthDate": "1990-07-15",
+      "phoneNumber": "+9004156767",
+      "citizenShip": "РФ",
+      "sex": "М",
+      "personalDataCheckBox": false,
+      "promotionCheckBox": true
+    }
 }

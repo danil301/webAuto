@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using Pages.Pages;
 using Newtonsoft.Json;
 using SpecFlowProject1;
+using System.Text.Json;
 
 namespace tasks2_Tests
 {
@@ -892,9 +893,10 @@ namespace tasks2_Tests
             };
 
             string path = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..");
+            
             string[] files = Directory.GetFiles(path, "data.json", SearchOption.AllDirectories);
-
-            Data data = JsonConvert.DeserializeObject<Data>(File.ReadAllText(files[0]));
+            var scenarios = JsonConvert.DeserializeObject<Dictionary<string, Data>>(File.ReadAllText(files[0]));
+            Data data = scenarios["goodScenario"];
 
             DebitCardYourCashBack debitCardYourCashBack = new DebitCardYourCashBack(driver, driverWait, true);
             debitCardYourCashBack.FillPage(data);
